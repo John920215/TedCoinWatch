@@ -22,5 +22,5 @@ module.exports = {
       base: "16px",
     },
   },
-  plugins: [require("tailwind-styled-scrollbar")],
+  plugins: [require("tailwind-scrollbar")]
 };
