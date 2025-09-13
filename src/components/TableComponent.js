@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CryptoContext } from "./../context/CryptoContext";
 import Pagination from "./Pagination";
 import { StorageContext } from "./../context/StorageContext";
+import Spinner from "./Spinner";
 
 const SaveBtn = ({ data }) => {
   const { saveCoin, allCoins, removeCoin } = useContext(StorageContext);
@@ -50,7 +51,7 @@ const SaveBtn = ({ data }) => {
   );
 };
 
-const TableComponent = () => {
+const TableComponent = ({ suppressError = false }) => {
   let { cryptoData, currency,error } = useContext(CryptoContext);
 
   return (
@@ -151,13 +152,10 @@ const TableComponent = () => {
           </table>
         ) : (!error.data && !error.search) ? (
           <div className="w-full min-h-[50vh] flex justify-center items-center">
-            <div
-              className="w-8 h-8 border-4 border-solid border-blue rounded-full border-b-gray-200 animate-spin"
-              role="status"
-            />
+            <Spinner size="8" />
             <span className="text-base ml-2">please wait...</span>
           </div>
-        ) : error.data || error.search ? (
+        ) : (error.data || error.search) && !suppressError ? (
           <h1 className="min-h-[60vh] text-lg text-red flex items-center justify-center ">
             {error.data
               ? error.data
